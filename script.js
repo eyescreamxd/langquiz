@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const welcomeScreen = document.getElementById('welcome-screen');
     const typeScreen = document.getElementById('type-screen');
     const typeSelect = document.getElementById('type-select');
+    const randomLettersButton = document.getElementById('random-letters-button');
     const startPracticeButton = document.getElementById('start-practice-button');
     const backToLanguageButton = document.getElementById('back-to-language-button');
     const backToTypeButton = document.getElementById('back-to-type-button');
@@ -15,6 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const problemLetters = document.getElementById('problem-letters');
 
     let errorTracker = {};
+    let inputs = [];
 
     // Populate the language dropdown
     for (let language in languages) {
@@ -46,6 +48,7 @@ document.addEventListener('DOMContentLoaded', () => {
         quiz.innerHTML = ''; // Clear previous quiz
         let characters = [];
         errorTracker = {};
+        inputs = [];
         types.forEach(type => {
             characters = characters.concat(Object.keys(languages[language][type]).map(char => ({
                 char,
@@ -56,7 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Shuffle characters
         characters = characters.sort(() => Math.random() - 0.5);
 
-        characters.forEach(({ char, translit }) => {
+        characters.forEach(({ char, translit }, index) => {
             const card = document.createElement('div');
             card.classList.add('card');
             card.innerHTML = `<div class="char">${char}</div><input type="text" />`;
@@ -65,14 +68,21 @@ document.addEventListener('DOMContentLoaded', () => {
             // Initialize error tracker for each character
             errorTracker[char] = { correct: false, mistakes: 0 };
 
-            // Handle input validation
             const input = card.querySelector('input');
+            inputs.push(input);
+
+            // Handle input validation
             input.addEventListener('input', () => {
                 if (input.value === translit) {
                     card.classList.add('correct');
                     card.classList.remove('incorrect');
+                    input.disabled = true;
                     errorTracker[char].correct = true;
                     checkCompletion();
+                    // Move to the next input
+                    if (index < inputs.length - 1) {
+                        inputs[index + 1].focus();
+                    }
                 } else {
                     card.classList.remove('correct');
                     card.classList.add('incorrect');
@@ -83,6 +93,67 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             });
         });
+        // Focus the first input initially
+        if (inputs.length > 0) {
+            inputs[0].focus();
+        }
+    }
+
+    // Function to generate a quiz with random letters
+    const generateRandomQuiz = (language) => {
+        quiz.innerHTML = ''; // Clear previous quiz
+        let characters = [];
+        errorTracker = {};
+        inputs = [];
+        const types = Object.keys(languages[language]);
+        types.forEach(type => {
+            characters = characters.concat(Object.keys(languages[language][type]).map(char => ({
+                char,
+                translit: languages[language][type][char]
+            })));
+        });
+        
+        // Select 10 random characters
+        characters = characters.sort(() => Math.random() - 0.5).slice(0, 10);
+
+        characters.forEach(({ char, translit }, index) => {
+            const card = document.createElement('div');
+            card.classList.add('card');
+            card.innerHTML = `<div class="char">${char}</div><input type="text" />`;
+            quiz.appendChild(card);
+
+            // Initialize error tracker for each character
+            errorTracker[char] = { correct: false, mistakes: 0 };
+
+            const input = card.querySelector('input');
+            inputs.push(input);
+
+            // Handle input validation
+            input.addEventListener('input', () => {
+                if (input.value === translit) {
+                    card.classList.add('correct');
+                    card.classList.remove('incorrect');
+                    input.disabled = true;
+                    errorTracker[char].correct = true;
+                    checkCompletion();
+                    // Move to the next input
+                    if (index < inputs.length - 1) {
+                        inputs[index + 1].focus();
+                    }
+                } else {
+                    card.classList.remove('correct');
+                    card.classList.add('incorrect');
+                    errorTracker[char].mistakes++;
+                    setTimeout(() => {
+                        card.classList.remove('incorrect');
+                    }, 2000);
+                }
+            });
+        });
+        // Focus the first input initially
+        if (inputs.length > 0) {
+            inputs[0].focus();
+        }
     }
 
     // Check if all characters are correctly answered
@@ -118,6 +189,18 @@ document.addEventListener('DOMContentLoaded', () => {
             welcomeScreen.style.display = 'none'; // Hide welcome screen
             typeScreen.style.display = 'block'; // Show type selection screen
             generateTypeSelect(selectedLanguage);
+        } else {
+            alert('Please select a language.');
+        }
+    });
+
+    // Event listener for random letters button
+    randomLettersButton.addEventListener('click', () => {
+        const selectedLanguage = languageSelect.value;
+        if (selectedLanguage) {
+            typeScreen.style.display = 'none'; // Hide type selection screen
+            quizContainer.style.display = 'block'; // Show quiz container
+            generateRandomQuiz(selectedLanguage);
         } else {
             alert('Please select a language.');
         }
