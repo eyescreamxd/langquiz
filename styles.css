@@ -1,0 +1,116 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.hidden {
+    display: none;
+}
+
+#welcome-screen, #type-screen, #quiz-container {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 60%;
+    text-align: center;
+}
+
+#welcome-screen, #type-screen {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+label {
+    font-size: 18px;
+    margin-bottom: 10px;
+    display: block;
+}
+
+select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+}
+
+button {
+    padding: 10px 20px;
+    font-size: 18px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+#type-select {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.type-option {
+    padding: 10px 20px;
+    border: 2px solid #007bff;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.type-option.selected {
+    background-color: #007bff;
+    color: #fff;
+}
+
+#quiz {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+}
+
+.card {
+    background-color: #007bff;
+    border-radius: 5px;
+    color: #fff;
+    padding: 20px;
+    width: 100px; /* Adjusted width for better centering */
+    text-align: center;
+    position: relative;
+}
+
+.card .char {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.card input {
+    width: 50%;
+    height: 40%;
+    padding: 5px;
+    text-align: center;
+    border: none;
+    border-radius: 3px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    box-sizing: border-box; /* Ensure padding and width fit within the card */
+}
+
+.card.correct {
+    background-color: #28a745;
+}
+
+.card.incorrect {
+    background-color: #dc3545;
+}
