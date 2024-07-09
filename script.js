@@ -5,9 +5,17 @@ document.addEventListener('DOMContentLoaded', () => {
     const typeScreen = document.getElementById('type-screen');
     const typeSelect = document.getElementById('type-select');
     const startPracticeButton = document.getElementById('start-practice-button');
+    const backToLanguageButton = document.getElementById('back-to-language-button');
+    const backToTypeButton = document.getElementById('back-to-type-button');
+    const backToStartButton = document.getElementById('back-to-start-button');
     const quizContainer = document.getElementById('quiz-container');
     const quiz = document.getElementById('quiz');
-    
+    const completionScreen = document.getElementById('completion-screen');
+    const errorCount = document.getElementById('error-count');
+    const problemLetters = document.getElementById('problem-letters');
+
+    let errorTracker = {};
+
     // Populate the language dropdown
     for (let language in languages) {
         const option = document.createElement('option');
@@ -37,6 +45,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const generateQuiz = (language, types) => {
         quiz.innerHTML = ''; // Clear previous quiz
         let characters = [];
+        errorTracker = {};
         types.forEach(type => {
             characters = characters.concat(Object.keys(languages[language][type]).map(char => ({
                 char,
@@ -53,21 +62,48 @@ document.addEventListener('DOMContentLoaded', () => {
             card.innerHTML = `<div class="char">${char}</div><input type="text" />`;
             quiz.appendChild(card);
 
+            // Initialize error tracker for each character
+            errorTracker[char] = { correct: false, mistakes: 0 };
+
             // Handle input validation
             const input = card.querySelector('input');
             input.addEventListener('input', () => {
                 if (input.value === translit) {
                     card.classList.add('correct');
                     card.classList.remove('incorrect');
+                    errorTracker[char].correct = true;
+                    checkCompletion();
                 } else {
                     card.classList.remove('correct');
                     card.classList.add('incorrect');
+                    errorTracker[char].mistakes++;
                     setTimeout(() => {
                         card.classList.remove('incorrect');
                     }, 2000);
                 }
             });
         });
+    }
+
+    // Check if all characters are correctly answered
+    const checkCompletion = () => {
+        const allCorrect = Object.values(errorTracker).every(track => track.correct);
+        if (allCorrect) {
+            showCompletionScreen();
+        }
+    }
+
+    // Show completion screen with error details
+    const showCompletionScreen = () => {
+        const errors = Object.entries(errorTracker)
+            .filter(([char, track]) => track.mistakes > 0)
+            .map(([char, track]) => `${char}: ${track.mistakes} errors`);
+
+        errorCount.textContent = `Total Errors: ${errors.length}`;
+        problemLetters.textContent = `Problematic Letters: ${errors.join(', ')}`;
+
+        quizContainer.style.display = 'none';
+        completionScreen.style.display = 'block';
     }
 
     // Event listener for language selection to generate type options
@@ -100,7 +136,26 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    // Event listener for back to language button
+    backToLanguageButton.addEventListener('click', () => {
+        typeScreen.style.display = 'none'; // Hide type selection screen
+        welcomeScreen.style.display = 'block'; // Show welcome screen
+    });
+
+    // Event listener for back to type button
+    backToTypeButton.addEventListener('click', () => {
+        quizContainer.style.display = 'none'; // Hide quiz container
+        typeScreen.style.display = 'block'; // Show type selection screen
+    });
+
+    // Event listener for back to start button
+    backToStartButton.addEventListener('click', () => {
+        completionScreen.style.display = 'none'; // Hide completion screen
+        welcomeScreen.style.display = 'block'; // Show welcome screen
+    });
+
     // Generate an initial quiz (hidden by default)
     quizContainer.style.display = 'none';
     typeScreen.style.display = 'none';
+    completionScreen.style.display = 'none';
 });

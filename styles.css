@@ -12,7 +12,7 @@ body {
     display: none;
 }
 
-#welcome-screen, #type-screen, #quiz-container {
+#welcome-screen, #type-screen, #quiz-container, #completion-screen {
     background-color: #fff;
     padding: 20px;
     border-radius: 10px;
@@ -21,7 +21,7 @@ body {
     text-align: center;
 }
 
-#welcome-screen, #type-screen {
+#welcome-screen, #type-screen, #completion-screen {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -47,6 +47,7 @@ button {
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    margin: 10px 0; /* Add margin to separate buttons */
 }
 
 button:hover {
@@ -78,6 +79,8 @@ button:hover {
     flex-wrap: wrap;
     gap: 10px;
     justify-content: center;
+    overflow-y: auto;
+    max-height: 60vh; /* Add max-height for scrollable area */
 }
 
 .card {
