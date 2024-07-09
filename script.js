@@ -52,17 +52,26 @@ document.addEventListener('DOMContentLoaded', () => {
         types.forEach(type => {
             characters = characters.concat(Object.keys(languages[language][type]).map(char => ({
                 char,
-                translit: languages[language][type][char]
+                translits: languages[language][type][char]
             })));
         });
         
         // Shuffle characters
         characters = characters.sort(() => Math.random() - 0.5);
 
-        characters.forEach(({ char, translit }, index) => {
+        characters.forEach(({ char, translits }, index) => {
             const card = document.createElement('div');
             card.classList.add('card');
-            card.innerHTML = `<div class="char">${char}</div><input type="text" />`;
+            card.innerHTML = `
+                <div class="char-container">
+                    <div class="char">${char}</div>
+                    <div class="help">
+                        ?
+                        <div class="tooltip">${translits.join(', ')}</div>
+                    </div>
+                </div>
+                <input type="text" />
+            `;
             quiz.appendChild(card);
 
             // Initialize error tracker for each character
@@ -73,7 +82,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Handle input validation
             input.addEventListener('input', () => {
-                if (input.value === translit) {
+                if (translits.includes(input.value)) {
                     card.classList.add('correct');
                     card.classList.remove('incorrect');
                     input.disabled = true;
@@ -109,17 +118,26 @@ document.addEventListener('DOMContentLoaded', () => {
         types.forEach(type => {
             characters = characters.concat(Object.keys(languages[language][type]).map(char => ({
                 char,
-                translit: languages[language][type][char]
+                translits: languages[language][type][char]
             })));
         });
         
         // Select 10 random characters
         characters = characters.sort(() => Math.random() - 0.5).slice(0, 10);
 
-        characters.forEach(({ char, translit }, index) => {
+        characters.forEach(({ char, translits }, index) => {
             const card = document.createElement('div');
             card.classList.add('card');
-            card.innerHTML = `<div class="char">${char}</div><input type="text" />`;
+            card.innerHTML = `
+                <div class="char-container">
+                    <div class="char">${char}</div>
+                    <div class="help">
+                        ?
+                        <div class="tooltip">${translits.join(', ')}</div>
+                    </div>
+                </div>
+                <input type="text" />
+            `;
             quiz.appendChild(card);
 
             // Initialize error tracker for each character
@@ -130,7 +148,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Handle input validation
             input.addEventListener('input', () => {
-                if (input.value === translit) {
+                if (translits.includes(input.value)) {
                     card.classList.add('correct');
                     card.classList.remove('incorrect');
                     input.disabled = true;
