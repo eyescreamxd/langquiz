@@ -80,18 +80,14 @@ document.addEventListener('DOMContentLoaded', () => {
             const input = card.querySelector('input');
             inputs.push(input);
 
-            // Handle input validation
-            input.addEventListener('input', () => {
+            // Handle input validation on focus out
+            input.addEventListener('blur', () => {
                 if (translits.includes(input.value)) {
                     card.classList.add('correct');
                     card.classList.remove('incorrect');
                     input.disabled = true;
                     errorTracker[char].correct = true;
                     checkCompletion();
-                    // Move to the next input
-                    if (index < inputs.length - 1) {
-                        inputs[index + 1].focus();
-                    }
                 } else {
                     card.classList.remove('correct');
                     card.classList.add('incorrect');
@@ -146,18 +142,14 @@ document.addEventListener('DOMContentLoaded', () => {
             const input = card.querySelector('input');
             inputs.push(input);
 
-            // Handle input validation
-            input.addEventListener('input', () => {
+            // Handle input validation on focus out
+            input.addEventListener('blur', () => {
                 if (translits.includes(input.value)) {
                     card.classList.add('correct');
                     card.classList.remove('incorrect');
                     input.disabled = true;
                     errorTracker[char].correct = true;
                     checkCompletion();
-                    // Move to the next input
-                    if (index < inputs.length - 1) {
-                        inputs[index + 1].focus();
-                    }
                 } else {
                     card.classList.remove('correct');
                     card.classList.add('incorrect');
