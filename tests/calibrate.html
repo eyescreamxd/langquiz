@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calibration — Armenian writing recognizer</title>
+  <link rel="stylesheet" href="../styles/base.css">
+  <link rel="stylesheet" href="../styles/layout.css">
+  <link rel="stylesheet" href="../styles/components.css">
+  <link rel="stylesheet" href="../styles/screens.css">
+  <style>
+    body { padding: 16px; }
+    .calibrate { max-width: 480px; margin: 0 auto; display: flex; flex-direction: column; gap: 16px; }
+    .calibrate-row { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+    .calibrate-info { font-family: monospace; font-size: 13px; white-space: pre-wrap; background: var(--surface); padding: 12px; border-radius: var(--radius-sm); }
+    select { padding: 8px; font-size: 16px; }
+  </style>
+</head>
+<body>
+  <div class="calibrate">
+    <h1>Калибровка распознавания</h1>
+    <p class="subtitle">Выбери букву и сложность, нарисуй варианты, посмотри на метрики. Подбирай пороги в <code>js/writing/recognizer.js</code>.</p>
+    <div class="calibrate-row">
+      <label>Буква: <select id="char"></select></label>
+      <label>Сложность:
+        <select id="difficulty"><option value="easy">easy</option><option value="hard">hard</option></select>
+      </label>
+      <button class="btn btn-ghost" id="silhouette-toggle">Показать силуэт</button>
+      <button class="btn btn-ghost" id="clear">Очистить</button>
+      <button class="btn btn-primary" id="check">Проверить</button>
+    </div>
+    <div class="canvas-wrap"></div>
+    <pre class="calibrate-info" id="info">—</pre>
+  </div>
+
+  <script type="module">
+    import { languages } from '../js/data.js';
+    import { createDrawingCanvas } from '../js/writing/canvas.js';
+    import { buildReference } from '../js/writing/reference.js';
+    import { compare } from '../js/writing/recognizer.js';
+
+    const sel = document.getElementById('char');
+    for (const type of ['capital', 'lower']) {
+      for (const char of Object.keys(languages.armenian[type])) {
+        const o = document.createElement('option');
+        o.value = char; o.textContent = `${char}  (${languages.armenian[type][char][0]})`;
+        sel.appendChild(o);
+      }
+    }
+
+    const drawing = createDrawingCanvas();
+    const wrap = document.querySelector('.canvas-wrap');
+    wrap.appendChild(drawing.canvas);
+
+    let silhouetteVisible = false;
+    async function refreshSilhouette() {
+      const old = wrap.querySelector('.canvas-silhouette');
+      if (old) old.remove();
+      if (!silhouetteVisible) return;
+      const ref = await buildReference(sel.value);
+      const sil = document.createElement('div');
+      sil.className = 'canvas-silhouette';
+      sil.style.backgroundImage = `url(${ref.silhouette})`;
+      wrap.insertBefore(sil, drawing.canvas);
+    }
+
+    document.getElementById('silhouette-toggle').addEventListener('click', () => {
+      silhouetteVisible = !silhouetteVisible;
+      refreshSilhouette();
+    });
+    document.getElementById('clear').addEventListener('click', () => drawing.clear());
+    sel.addEventListener('change', () => { drawing.clear(); refreshSilhouette(); });
+    document.getElementById('check').addEventListener('click', async () => {
+      const ref = await buildReference(sel.value);
+      const diff = document.getElementById('difficulty').value;
+      const r = compare(drawing.getMask(), ref.mask, ref.pixelCount, diff);
+      document.getElementById('info').textContent = JSON.stringify({
+        char: sel.value,
+        difficulty: diff,
+        passed: r.passed,
+        coverage: r.coverage.toFixed(3),
+        precision: r.precision.toFixed(3),
+        iou: r.iou.toFixed(3),
+        sizeRatio: r.sizeRatio.toFixed(3),
+        userCount: r.userCount,
+        refCount: ref.pixelCount,
+      }, null, 2);
+    });
+  </script>
+</body>
+</html>

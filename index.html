@@ -1,44 +1,23 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Language Quiz</title>
-    <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#f7f7f8">
+  <title>Армянский алфавит — тренажёр</title>
+  <link rel="stylesheet" href="styles/base.css">
+  <link rel="stylesheet" href="styles/layout.css">
+  <link rel="stylesheet" href="styles/components.css">
+  <link rel="stylesheet" href="styles/screens.css">
 </head>
 <body>
-    <div id="welcome-screen">
-        <h1>Welcome to the Language Quiz</h1>
-        <label for="language-select">Select Language:</label>
-        <select id="language-select">
-            <!-- Options will be populated by JavaScript -->
-        </select>
-        <button id="start-button">Start Quiz</button>
-    </div>
-    <div id="type-screen" class="hidden">
-        <h1>Select Types of Letters to Practice</h1>
-        <div id="type-select">
-            <!-- Options will be populated by JavaScript -->
-        </div>
-        <button id="random-letters-button">10 Random Letters</button>
-        <button id="back-to-language-button">Back</button>
-        <button id="start-practice-button">Start Practice</button>
-    </div>
-    <div id="quiz-container" class="hidden">
-        <h1>Language Quiz</h1>
-        <div id="quiz">
-            <!-- Quiz content will be populated by JavaScript -->
-        </div>
-        <button id="back-to-type-button">Back</button>
-    </div>
-    <div id="completion-screen" class="hidden">
-        <h1>Quiz Completed!</h1>
-        <p id="error-count"></p>
-        <p id="problem-letters"></p>
-        <button id="back-to-start-button">Back to Start</button>
-    </div>
-    <script src="data.js"></script>
-    <script src="script.js"></script>
+  <main id="app">
+    <section id="screen-welcome" class="screen"></section>
+    <section id="screen-setup" class="screen hidden"></section>
+    <section id="screen-quiz" class="screen hidden"></section>
+    <section id="screen-writing" class="screen hidden"></section>
+    <section id="screen-summary" class="screen hidden"></section>
+  </main>
+  <script type="module" src="js/app.js"></script>
 </body>
 </html>
