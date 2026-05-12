@@ -90,8 +90,8 @@ export function mount(root) {
 
   function toggleHint() {
     const hint = root.querySelector('.hint');
-    const { translits } = session.letters[session.index];
-    hint.textContent = translits.join(', ');
+    const { translits, ru } = session.letters[session.index];
+    hint.textContent = `${translits.join(', ')} · ${ru}`;
     hint.hidden = !hint.hidden;
   }
 

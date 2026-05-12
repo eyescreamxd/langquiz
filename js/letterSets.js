@@ -5,8 +5,8 @@ function buildEntries(types) {
   const alpha = getAlphabet();
   const result = [];
   for (const type of types) {
-    for (const [char, translits] of Object.entries(alpha[type])) {
-      result.push({ char, translits });
+    for (const [char, info] of Object.entries(alpha[type])) {
+      result.push({ char, translits: info.translits, ru: info.ru });
     }
   }
   return result;

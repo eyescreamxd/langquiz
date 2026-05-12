@@ -43,7 +43,8 @@
     for (const type of ['capital', 'lower']) {
       for (const char of Object.keys(languages.armenian[type])) {
         const o = document.createElement('option');
-        o.value = char; o.textContent = `${char}  (${languages.armenian[type][char][0]})`;
+        const info = languages.armenian[type][char];
+        o.value = char; o.textContent = `${char}  (${info.translits[0]} · ${info.ru})`;
         sel.appendChild(o);
       }
     }
