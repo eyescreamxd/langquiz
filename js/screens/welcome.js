@@ -12,7 +12,7 @@ export function mount(root) {
         <button class="btn btn-primary btn-large" data-mode="quiz">Узнавание букв</button>
         <button class="btn btn-primary btn-large" data-mode="writing" ${isFontUnavailable() ? 'disabled' : ''}>Прописи</button>
         ${isFontUnavailable() ? `<p class="font-error">Не удалось загрузить шрифт, перезагрузите страницу.</p>` : ''}
-        <button class="btn btn-ghost" data-action="help">Алфавит и правила ответов</button>
+        <button class="btn btn-outline" data-action="help">Алфавит и правила ответов</button>
       </div>
       ${weak.length ? `
         <div class="weak-letters">

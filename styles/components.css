@@ -1,43 +1,68 @@
 .btn {
   font: inherit;
-  border: none;
+  font-weight: 500;
+  border: 1px solid transparent;
   border-radius: var(--radius-sm);
   cursor: pointer;
   padding: 10px 20px;
   background: var(--surface);
   color: var(--text);
   min-height: 44px;
-  transition: background 0.15s, transform 0.05s;
+  transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease,
+              transform 0.06s ease, box-shadow 0.15s ease;
 }
 
 .btn:hover { background: var(--border); }
-.btn:active { transform: scale(0.98); }
-.btn:disabled { opacity: 0.5; cursor: not-allowed; }
+.btn:active { transform: translateY(1px); }
+.btn:disabled { opacity: 0.45; cursor: not-allowed; transform: none; }
 
 .btn-primary {
   background: var(--primary);
-  color: white;
+  color: #fff;
+  box-shadow: 0 1px 2px rgba(60, 40, 20, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.12);
 }
-.btn-primary:hover { background: var(--primary-hover); }
+.btn-primary:hover {
+  background: var(--primary-hover);
+}
 
 .btn-large {
-  font-size: 18px;
-  padding: 14px 28px;
+  font-size: 17px;
+  padding: 15px 28px;
   min-height: 56px;
+  border-radius: var(--radius);
 }
 
-.btn-ghost { background: transparent; }
-.btn-ghost:hover { background: var(--border); }
+.btn-ghost {
+  background: transparent;
+  color: var(--text-muted);
+}
+.btn-ghost:hover {
+  background: var(--primary-soft);
+  color: var(--primary);
+}
+
+.btn-outline {
+  background: transparent;
+  border-color: var(--border-strong);
+  color: var(--text);
+  font-weight: 500;
+}
+.btn-outline:hover {
+  background: var(--primary-soft);
+  border-color: var(--primary);
+  color: var(--primary);
+}
 
 .btn-icon {
   background: transparent;
   width: 44px;
   height: 44px;
   padding: 0;
-  font-size: 22px;
+  font-size: 20px;
   border-radius: 50%;
+  color: var(--text-muted);
 }
-.btn-icon:hover { background: var(--border); }
+.btn-icon:hover { background: var(--primary-soft); color: var(--primary); }
 
 .dots {
   display: flex;
@@ -48,49 +73,56 @@
 }
 
 .dot {
-  width: 14px;
-  height: 14px;
+  width: 12px;
+  height: 12px;
   border-radius: 50%;
   background: var(--border);
-  transition: background 0.2s, border-color 0.2s;
+  transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
   border: 2px solid transparent;
 }
 
 .dot-pending { background: var(--border); }
-.dot-current { background: var(--surface); border-color: var(--primary); }
+.dot-current {
+  background: var(--surface);
+  border-color: var(--primary);
+  transform: scale(1.15);
+}
 .dot-pass    { background: var(--success); }
 .dot-fail    { background: var(--error); }
 
 .answer-input {
   font: inherit;
-  font-size: 22px;
+  font-weight: 500;
+  font-size: 24px;
   text-align: center;
-  padding: 10px 16px;
-  width: 200px;
+  padding: 12px 16px;
+  width: 220px;
   max-width: 100%;
-  border: 2px solid var(--border);
+  border: 1.5px solid var(--border-strong);
   border-radius: var(--radius-sm);
   background: var(--surface);
   color: var(--text);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }
 
 .answer-input:focus {
   outline: none;
   border-color: var(--primary);
+  box-shadow: 0 0 0 4px var(--primary-soft);
 }
 
-.answer-input:disabled { color: var(--text-muted); }
+.answer-input:disabled { color: var(--text-muted); background: var(--bg); }
 
 @keyframes flash-green {
   0%, 100% { background: var(--surface); }
-  50% { background: rgba(22, 163, 74, 0.2); }
+  50% { background: var(--success-soft); }
 }
 
 @keyframes flash-red {
   0%, 100% { background: var(--surface); transform: translateX(0); }
   20% { transform: translateX(-6px); }
   40% { transform: translateX(6px); }
-  60% { transform: translateX(-3px); background: rgba(220, 38, 38, 0.2); }
+  60% { transform: translateX(-3px); background: var(--error-soft); }
   80% { transform: translateX(3px); }
 }
 
@@ -116,11 +148,12 @@
   width: min(90vw, 360px);
   aspect-ratio: 1;
   background:
-    radial-gradient(circle, var(--border) 1px, transparent 1.5px) 0 0 / 24px 24px,
+    radial-gradient(circle, var(--border-strong) 1px, transparent 1.5px) 0 0 / 24px 24px,
     var(--surface);
-  border: 2px solid var(--border);
+  border: 1.5px solid var(--border-strong);
   border-radius: var(--radius);
   overflow: hidden;
+  box-shadow: var(--shadow-sm);
 }
 
 .canvas-wrap .draw-canvas {
