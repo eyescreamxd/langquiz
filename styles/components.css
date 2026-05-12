@@ -170,9 +170,17 @@
   position: absolute;
   inset: 2px;
   pointer-events: none;
-  opacity: 0.15;
+  opacity: 0.18;
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
   border-radius: calc(var(--radius) - 2px);
+}
+
+@media (prefers-color-scheme: dark) {
+  .canvas-silhouette {
+    /* PNG is dark ink on transparent — invert to light ink for dark surface */
+    filter: invert(1);
+    opacity: 0.35;
+  }
 }
