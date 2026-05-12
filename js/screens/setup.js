@@ -1,5 +1,5 @@
 import { go, session } from '../app.js';
-import { SETS, isWeakAvailable } from '../letterSets.js';
+import { SETS, isWeakAvailable } from '../letterSets.js?v=2';
 
 let currentMode = null;
 let currentSet = 'random10';

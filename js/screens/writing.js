@@ -63,11 +63,11 @@ export function mount(root) {
   async function showCurrent() {
     const total = session.letters.length;
     const i = session.index;
-    const { char, translits, ru } = session.letters[i];
+    const { char, ru } = session.letters[i];
     root.querySelector('.counter').textContent = `${i + 1} / ${total}`;
     root.querySelector('.progress-fill').style.width = `${(i / total) * 100}%`;
     root.querySelector('.char-mini').textContent = char;
-    root.querySelector('.translit').textContent = `${translits[0]} · ${ru}`;
+    root.querySelector('.translit').textContent = ru;
     drawing.clear();
     dots.setCurrent(i);
 

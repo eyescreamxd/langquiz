@@ -135,6 +135,7 @@
   font-size: clamp(120px, 35vmin, 240px);
   line-height: 1;
   font-weight: 700;
+  padding-bottom: 0.25em;
 }
 
 .hint {
@@ -227,4 +228,82 @@
   color: var(--error);
   text-align: center;
   margin: 4px 0 0;
+}
+
+.help-table {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  max-height: 50vh;
+  overflow-y: auto;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 4px;
+}
+
+.help-row {
+  display: grid;
+  grid-template-columns: 90px 1fr 1.2fr;
+  gap: 12px;
+  align-items: baseline;
+  padding: 8px 10px;
+  background: var(--surface);
+  border-radius: var(--radius-sm);
+}
+
+.help-row-head {
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  background: transparent;
+  padding: 6px 10px 2px;
+}
+
+.help-chars {
+  font-family: var(--font-armenian);
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: 4px;
+}
+
+.help-chars-head { letter-spacing: 0; }
+
+.help-translit {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 14px;
+  color: var(--text-muted);
+}
+
+.help-ru {
+  font-size: 14px;
+}
+
+.help-notes {
+  width: 100%;
+  margin-top: 16px;
+  font-size: 14px;
+}
+
+.help-notes h3 {
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+  margin: 0 0 8px;
+}
+
+.help-notes ul {
+  margin: 0 0 12px;
+  padding-left: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.help-notes li b {
+  font-family: var(--font-armenian);
+  letter-spacing: 2px;
 }

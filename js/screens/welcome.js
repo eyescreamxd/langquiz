@@ -12,6 +12,7 @@ export function mount(root) {
         <button class="btn btn-primary btn-large" data-mode="quiz">Узнавание букв</button>
         <button class="btn btn-primary btn-large" data-mode="writing" ${isFontUnavailable() ? 'disabled' : ''}>Прописи</button>
         ${isFontUnavailable() ? `<p class="font-error">Не удалось загрузить шрифт, перезагрузите страницу.</p>` : ''}
+        <button class="btn btn-ghost" data-action="help">Алфавит и правила ответов</button>
       </div>
       ${weak.length ? `
         <div class="weak-letters">
@@ -25,6 +26,8 @@ export function mount(root) {
     root.querySelectorAll('button[data-mode]').forEach(btn => {
       btn.addEventListener('click', () => go('setup', { mode: btn.dataset.mode }));
     });
+    const helpBtn = root.querySelector('button[data-action="help"]');
+    if (helpBtn) helpBtn.addEventListener('click', () => go('help'));
   }
   window.addEventListener('screen:enter', (e) => {
     if (e.detail.screen === 'welcome') render();

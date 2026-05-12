@@ -56,11 +56,12 @@ export function mount(root) {
     const i = session.index;
     const { char, translits } = session.letters[i];
     const input = root.querySelector('.answer-input');
-    const value = input.value.trim();
+    const value = input.value.trim().toLowerCase();
     if (!value) return;
     busy = true;
     const card = root.querySelector('.card-big');
-    if (translits.includes(value)) {
+    const accepted = translits.map(t => t.toLowerCase());
+    if (accepted.includes(value)) {
       card.classList.add('flash-correct');
       input.disabled = true;
       const hadErrors = (session.errors[char] || 0) > 0;
