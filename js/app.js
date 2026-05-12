@@ -1,7 +1,7 @@
 import { languages } from './data.js';
 import { ensureFontReady } from './writing/reference.js';
 
-const SCREENS = ['welcome', 'setup', 'quiz', 'writing', 'summary', 'help'];
+const SCREENS = ['welcome', 'setup', 'quiz', 'pick', 'writing', 'summary', 'help'];
 const elements = {};
 
 export const session = {
@@ -32,6 +32,7 @@ window.addEventListener('DOMContentLoaded', async () => {
     import('./screens/welcome.js').then(m => m.mount(elements.welcome)),
     import('./screens/setup.js').then(m => m.mount(elements.setup)),
     import('./screens/quiz.js').then(m => m.mount(elements.quiz)),
+    import('./screens/pick.js').then(m => m.mount(elements.pick)),
     import('./screens/writing.js').then(m => m.mount(elements.writing)),
     import('./screens/summary.js').then(m => m.mount(elements.summary)),
     import('./screens/help.js').then(m => m.mount(elements.help)),

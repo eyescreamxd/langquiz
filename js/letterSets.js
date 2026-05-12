@@ -22,12 +22,11 @@ function shuffle(arr) {
 }
 
 export const SETS = {
-  random10: { label: '10 случайных', build: () => shuffle(buildEntries(['capital', 'lower'])).slice(0, 10) },
-  capital:  { label: 'Заглавные',    build: () => shuffle(buildEntries(['capital'])) },
-  lower:    { label: 'Строчные',     build: () => shuffle(buildEntries(['lower'])) },
-  all:      { label: 'Все',          build: () => shuffle(buildEntries(['capital', 'lower'])) },
-  weak:     { label: 'Тренировать слабые', build: () => {
-    const weak = weakLetters(10);
+  all:     { label: 'Все буквы',     build: () => shuffle(buildEntries(['capital', 'lower'])) },
+  capital: { label: 'Заглавные',     build: () => shuffle(buildEntries(['capital'])) },
+  lower:   { label: 'Строчные',      build: () => shuffle(buildEntries(['lower'])) },
+  weak:    { label: 'Сложные буквы', build: () => {
+    const weak = weakLetters(40);
     if (weak.length === 0) return [];
     const allEntries = buildEntries(['capital', 'lower']);
     const byChar = new Map(allEntries.map(e => [e.char, e]));
@@ -35,6 +34,23 @@ export const SETS = {
   } },
 };
 
+export const LENGTHS = [
+  { value: 5,    label: '5' },
+  { value: 10,   label: '10' },
+  { value: 20,   label: '20' },
+  { value: null, label: 'Все' },
+];
+
+export function applyLength(entries, length) {
+  if (length == null) return entries;
+  return entries.slice(0, length);
+}
+
 export function isWeakAvailable() {
   return weakLetters(10).length >= 5;
+}
+
+// Pool used by pick mode when it needs additional distractors beyond the session
+export function getAllEntries() {
+  return buildEntries(['capital', 'lower']);
 }

@@ -321,3 +321,119 @@
   font-family: var(--font-armenian);
   letter-spacing: 2px;
 }
+
+.streak {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--primary);
+  background: var(--primary-soft);
+  padding: 6px 12px;
+  border-radius: 999px;
+  letter-spacing: 0.01em;
+}
+
+.setup-block {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.option-compact {
+  flex: 1;
+  min-width: 60px;
+  padding: 10px 14px;
+  font-size: 14px;
+}
+
+.pick-prompt {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: clamp(140px, 30vmin, 220px);
+  width: 100%;
+  padding: 16px 0;
+}
+
+.prompt-char {
+  font-family: var(--font-armenian);
+  font-size: clamp(120px, 32vmin, 220px);
+  font-weight: 700;
+  line-height: 1;
+  padding-bottom: 0.25em;
+}
+
+.prompt-ru {
+  font-size: clamp(36px, 8vmin, 56px);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--text);
+  text-align: center;
+  line-height: 1.2;
+}
+
+.pick-options {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  width: 100%;
+}
+
+.pick-option {
+  font: inherit;
+  font-weight: 500;
+  font-size: 17px;
+  border: 1.5px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  border-radius: var(--radius);
+  padding: 18px 16px;
+  cursor: pointer;
+  min-height: 64px;
+  text-align: center;
+  transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease,
+              transform 0.06s ease;
+}
+
+.pick-option:hover {
+  border-color: var(--primary);
+  background: var(--primary-soft);
+}
+.pick-option:active { transform: translateY(1px); }
+.pick-option:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.pick-option-armenian {
+  font-family: var(--font-armenian);
+  font-size: 40px;
+  font-weight: 700;
+  line-height: 1;
+  padding: 16px;
+}
+
+.pick-correct {
+  background: var(--success-soft);
+  border-color: var(--success);
+  color: var(--success);
+}
+
+.pick-wrong {
+  background: var(--error-soft);
+  border-color: var(--error);
+  color: var(--error);
+  animation: shake 0.4s ease-out;
+}
+
+.pick-correct-hint {
+  background: var(--success-soft);
+  border-color: var(--success);
+  color: var(--success);
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-4px); }
+  75% { transform: translateX(4px); }
+}

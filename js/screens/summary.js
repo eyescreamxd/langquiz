@@ -1,6 +1,30 @@
 import { go, session } from '../app.js';
 import { recordSession } from '../storage.js';
 
+let confettiPromise = null;
+function loadConfetti() {
+  if (!confettiPromise) {
+    confettiPromise = import('https://esm.sh/canvas-confetti@1.9.3').then(m => m.default).catch(() => null);
+  }
+  return confettiPromise;
+}
+
+function celebrate() {
+  loadConfetti().then(confetti => {
+    if (!confetti) return;
+    const burst = (originX) => confetti({
+      particleCount: 60,
+      spread: 70,
+      startVelocity: 35,
+      origin: { x: originX, y: 0.7 },
+      colors: ['#c96442', '#5b8c3d', '#d9c8b3', '#2d2620', '#f6e9e2'],
+    });
+    burst(0.2);
+    setTimeout(() => burst(0.5), 150);
+    setTimeout(() => burst(0.8), 300);
+  });
+}
+
 export function mount(root) {
   function render() {
     const total = session.letters.length;
@@ -14,6 +38,8 @@ export function mount(root) {
       results[char] = { mode: session.mode, seen: 1, errors: session.errors[char] || 0 };
     }
     recordSession(results);
+
+    if (totalErrors === 0) celebrate();
 
     root.innerHTML = `
       <h1>Готово!</h1>

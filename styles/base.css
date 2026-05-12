@@ -81,3 +81,25 @@ h3 {
 }
 
 .hidden { display: none !important; }
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #1c1916;
+    --surface: #26221e;
+    --surface-elevated: #2f2a24;
+    --text: #f3ebe0;
+    --text-muted: #9a8e80;
+    --primary: #e07a55;
+    --primary-hover: #c96442;
+    --primary-soft: #3a2820;
+    --success: #7eb050;
+    --success-soft: #2c3a22;
+    --error: #d96650;
+    --error-soft: #3a2520;
+    --border: #3a342d;
+    --border-strong: #4d463d;
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.25);
+    --shadow: 0 1px 2px rgba(0, 0, 0, 0.25), 0 8px 24px rgba(0, 0, 0, 0.3);
+    --shadow-lg: 0 2px 4px rgba(0, 0, 0, 0.3), 0 20px 40px rgba(0, 0, 0, 0.4);
+  }
+}
